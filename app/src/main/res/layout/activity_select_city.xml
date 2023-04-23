@@ -198,7 +198,7 @@
         app:boxBackgroundMode="filled"
         app:boxStrokeColor="#009688"
         app:endIconMode="clear_text"
-        app:helperText="Ciudad,País,Estado"
+        app:helperText="Ciudad, Estado, Pais"
         app:helperTextEnabled="true"
         app:helperTextTextColor="#FFFFFF"
         app:hintTextColor="#FFFFFF"
@@ -269,5 +269,14 @@
         app:layout_constraintStart_toEndOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="@+id/scrollView2"
         app:srcCompat="@drawable/ic_add" />
-
+    <TextView
+        android:id="@+id/initEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textColor="#FFFFEB3B"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/initPais"
+        app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,9 +21,9 @@ public class PrediccionAdapter extends RecyclerView.Adapter<PrediccionAdapter.Vi
 
     private Prediccion prediccion;
     private final LayoutInflater layoutInflater;
-    private final OnPrediccionListener oNL;
+    private final OnItemListener oNL;
 
-    public PrediccionAdapter(Context context, OnPrediccionListener oNL) {
+    public PrediccionAdapter(Context context, OnItemListener oNL) {
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.oNL = oNL;
     }
@@ -71,9 +71,9 @@ public class PrediccionAdapter extends RecyclerView.Adapter<PrediccionAdapter.Vi
         private TextView dia, descripcion, fecha, max, rain, hora;
         private ImageView image;
         private int pos;
-        OnPrediccionListener holderListener;
+        OnItemListener holderListener;
 
-        public ViewHolder(@NonNull View itemView, OnPrediccionListener onPrediccionListener) {
+        public ViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
             dia = itemView.findViewById(R.id.diaSemana);
@@ -82,7 +82,7 @@ public class PrediccionAdapter extends RecyclerView.Adapter<PrediccionAdapter.Vi
             fecha = itemView.findViewById(R.id.fecha);
             max = itemView.findViewById(R.id.temp);
             rain = itemView.findViewById(R.id.rain);
-            holderListener = onPrediccionListener;
+            holderListener = onItemListener;
 
             itemView.setOnClickListener(this);
         }
@@ -109,7 +109,7 @@ public class PrediccionAdapter extends RecyclerView.Adapter<PrediccionAdapter.Vi
 
         @Override
         public void onClick(View view) {
-            holderListener.onPrediccionClick(getAdapterPosition());
+            holderListener.onItemClick(getAdapterPosition());
         }
     }
 }

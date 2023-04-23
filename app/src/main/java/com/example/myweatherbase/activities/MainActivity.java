@@ -18,15 +18,14 @@ import com.example.myweatherbase.base.CallInterface;
 import com.example.myweatherbase.base.ImageDownloader;
 import com.example.myweatherbase.base.Parameters;
 
-public class MainActivity extends BaseActivity implements CallInterface, OnPrediccionListener {
-
-    private boolean reciboCiudadGuardada;
+public class MainActivity extends BaseActivity implements CallInterface, OnItemListener {
+    private boolean reciboCiudad;
     private PrediccionAdapter prediccionAdapter;
     private RecyclerView recyclerView;
     private Prediccion prediccion;
     private CurrentData currentData;
     private CiudadGuardada ciudadGuardada;
-    private TextView titulo, pais, temperatura, desc, rain, humidity, wind;
+    private TextView titulo, estado, pais, temperatura, desc, rain, humidity, wind;
     private ImageView image;
     private ImageButton update, addFavorite;
     private String latitudRecibida, longitudRecibida;
@@ -36,8 +35,9 @@ public class MainActivity extends BaseActivity implements CallInterface, OnPredi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_2);
 
-        pais=findViewById(R.id.initPais);
         titulo = findViewById(R.id.initTitulo);
+        estado = findViewById(R.id.initEstado);
+        pais=findViewById(R.id.initPais);
         temperatura=findViewById(R.id.initTempValue);
         desc =findViewById(R.id.initDescValue);
         rain=findViewById(R.id.initRain);
@@ -56,16 +56,11 @@ public class MainActivity extends BaseActivity implements CallInterface, OnPredi
         recyclerView.setLayoutManager(linearLayoutManager);
 
         if (savedInstanceState==null){
-            reciboCiudadGuardada = getIntent().getExtras().containsKey("ciudadGuardada");
-            if(reciboCiudadGuardada) {
+            if(getIntent().getExtras().containsKey("ciudadGuardada")) {
+                reciboCiudad = true;
                 ciudadGuardada= (CiudadGuardada) getIntent().getExtras().getSerializable("ciudadGuardada");
-                titulo.setText(ciudadGuardada.name);
                 latitudRecibida = String.valueOf(ciudadGuardada.lat);
                 longitudRecibida = String.valueOf(ciudadGuardada.lon);
-            } else if (getIntent().getExtras().containsKey("currentData")) {
-                currentData = (CurrentData) getIntent().getExtras().getSerializable("currentData");
-                latitudRecibida = String.valueOf(currentData.coord.lat);
-                longitudRecibida = String.valueOf(currentData.coord.lon);
             } else {
                 latitudRecibida = (String) getIntent().getExtras().getSerializable("enviarLat");
                 longitudRecibida = (String) getIntent().getExtras().getSerializable("enviarLon");
@@ -81,28 +76,32 @@ public class MainActivity extends BaseActivity implements CallInterface, OnPredi
 
         update.setOnClickListener(view -> {
             currentData=null;
+            prediccion=null;
             showProgress();
             executeCall(new CallInterface() {
                 @Override
                 public void doInBackground() {
                     currentData = Connector.getConector().get(CurrentData.class,
-                            Parameters.CURRENT_1 + Parameters.CURRENT_2 + "&q=" + titulo.getText().toString());
+                            Parameters.CURRENT_1 + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
                     prediccion = Connector.getConector().get(Prediccion.class,
                             Parameters.URL + Parameters.URL_OPTIONS + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
                 }
                 @Override
                 public void doInUI() {
-                    rellenarDatos();
-                    prediccionAdapter.setPrediccion(prediccion);
                     hideProgress();
+                    if (currentData!=null && prediccion!=null) {
+                        rellenarDatos();
+                        prediccionAdapter.setPrediccion(prediccion);
+                    }else{
+                        Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         });
         addFavorite.setOnClickListener(view -> {
             CityRepository.getInstance().addCity(ciudadGuardada);
-            Toast.makeText(this, currentData.name + " se ha añadido a lugares guardados.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, ciudadGuardada.name + " se ha añadido a lugares guardados.", Toast.LENGTH_SHORT).show();
         });
-
         volverPaginaInicio.setOnClickListener(view -> {
             Intent i = new Intent();
             setResult(RESULT_OK, i);
@@ -117,25 +116,32 @@ public class MainActivity extends BaseActivity implements CallInterface, OnPredi
         outState.putSerializable("Title", titulo.getText().toString());
     }
 
-    // Realizamos la llamada y recogemos los datos en un objeto Root
     @Override
     public void doInBackground() {
+        if (!reciboCiudad)
+            ciudadGuardada = Connector.getConector().get(CiudadGuardada.class,
+                    Parameters.BY_CITY_1_REVERSE + latitudRecibida + "&lon="+longitudRecibida);
         currentData = Connector.getConector().get(CurrentData.class,
-                    Parameters.CURRENT_1 + Parameters.CURRENT_2 + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
+                    Parameters.CURRENT_1 + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
         prediccion = Connector.getConector().get(Prediccion.class,
                 Parameters.URL + Parameters.URL_OPTIONS + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
     }
 
-    // Una vez ya se ha realizado la llamada, ocultamos la barra de progreso y presentamos los datos
     @Override
     public void doInUI() {
         hideProgress();
-        prediccionAdapter.setPrediccion(prediccion);
-        rellenarDatos();
+        if (currentData!=null && prediccion!=null && ciudadGuardada!=null) {
+            rellenarDatos();
+            prediccionAdapter.setPrediccion(prediccion);
+        }else{
+            Toast.makeText(this, R.string.no_network, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void rellenarDatos(){
-        pais.setText(currentData.sys.country);
+        titulo.setText(ciudadGuardada.name);
+        estado.setText(ciudadGuardada.state+", ");
+        pais.setText(ciudadGuardada.country);
         temperatura.setText(currentData.main.temp + "º");
         if (currentData.main.temp > 26)
             temperatura.setTextColor(getColor(R.color.RED));
@@ -150,7 +156,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnPredi
     }
 
     @Override
-    public void onPrediccionClick(int position) {
+    public void onItemClick(int position) {
         Toast.makeText(this, position+"", Toast.LENGTH_SHORT).show();
     }
 }

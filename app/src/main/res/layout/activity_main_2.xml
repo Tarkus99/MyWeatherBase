@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto_light"
+        android:fontFamily="@font/roboto_medium"
         android:text="TextView"
         android:textColor="#FFF303"
         android:textSize="24sp"
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/roboto_light"
+        android:fontFamily="@font/roboto_medium"
         android:text="TextView"
         android:textColor="#FFF303"
         android:textSize="24sp"
@@ -211,7 +211,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/initImage"
         app:layout_constraintTop_toTopOf="@+id/initTitulo"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/baseline_favorite_24"
+        app:tint="#FFE14747"/>
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -219,10 +220,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/custom_image_button"
-        android:backgroundTint="@color/RED"
         app:layout_constraintEnd_toEndOf="@+id/addFavorite"
         app:layout_constraintStart_toStartOf="@+id/addFavorite"
         app:layout_constraintTop_toBottomOf="@+id/addFavorite"
         app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+    <TextView
+        android:id="@+id/initEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textColor="#FFFFEB3B"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/initPais"
+        app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

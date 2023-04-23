@@ -26,11 +26,11 @@ import com.example.myweatherbase.base.ImageDownloader;
 import com.example.myweatherbase.base.Parameters;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class SelectCity extends BaseActivity implements OnPrediccionListener {
+public class SelectCity extends BaseActivity implements OnItemListener {
     private ImageView image;
     private LocationManager managerloc;
     private String proveedor;
-    private TextView titulo, temp, desc, pais, wind, humidity, rain;
+    private TextView titulo, temp, desc, pais, wind, humidity, rain, estado;
     private TextInputLayout buscar;
     private ImageButton btnBuscar, update, actualUbi, addCiudad;
     private CurrentData currentData;
@@ -42,8 +42,8 @@ public class SelectCity extends BaseActivity implements OnPrediccionListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_city);
 
-
         titulo = findViewById(R.id.initTitulo);
+        estado = findViewById(R.id.initEstado);
         pais = findViewById(R.id.initPais);
         image = findViewById(R.id.initImage);
         temp = findViewById(R.id.initTempValue);
@@ -67,9 +67,7 @@ public class SelectCity extends BaseActivity implements OnPrediccionListener {
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        lugaresGuardadosAdapter.notifyDataSetChanged();
-                    }
+                    if (result.getResultCode() == RESULT_OK) lugaresGuardadosAdapter.notifyDataSetChanged();
                 });
 
         initialize();
@@ -89,7 +87,7 @@ public class SelectCity extends BaseActivity implements OnPrediccionListener {
                         @Override
                         public void doInBackground() {
                             ciudadGuardada = Connector.getConector().get(CiudadGuardada.class,
-                                    Parameters.BY_CITY_1 + buscar.getEditText().getText().toString() + Parameters.BY_CITY_2);
+                                    Parameters.BY_CITY_1 + buscar.getEditText().getText().toString());
                         }
                         @Override
                         public void doInUI() {
@@ -101,7 +99,7 @@ public class SelectCity extends BaseActivity implements OnPrediccionListener {
                             } else {
                                 hideProgress();
                                 buscar.setErrorEnabled(true);
-                                buscar.setError("La ciudad/población introducida no ha ofrecido resultados");
+                                buscar.setError("La ciudad/población introducida no ha ofrecido resultados./"+R.string.no_network);
                             }
                         }
                     });
@@ -147,27 +145,21 @@ public class SelectCity extends BaseActivity implements OnPrediccionListener {
             executeCall(new CallInterface() {
                 @Override
                 public void doInBackground() {
+                    ciudadGuardada =  Connector.getConector().get(CiudadGuardada.class,
+                            Parameters.BY_CITY_1_REVERSE + location.getLatitude() +
+                                    "&lon=" + location.getLongitude());
                     currentData = Connector.getConector().get(CurrentData.class,
                             Parameters.CURRENT_1 + "&lat=" + location.getLatitude() +
-                                    "&lon=" + location.getLongitude() + Parameters.CURRENT_2);
+                                    "&lon=" + location.getLongitude());
                 }
 
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void doInUI() {
-                    titulo.setText(currentData.name);
-                    pais.setText(currentData.sys.country);
-                    temp.setText(currentData.main.temp + "º");
-                    if (currentData.main.temp > 26)
-                        temp.setTextColor(getColor(R.color.RED));
-                    desc.setText(Tools.primeraMayu(currentData.weather.get(0).description));
-                    wind.setText(currentData.wind.speed + "km/h");
-                    humidity.setText(currentData.main.humidity + "%");
-                    if (currentData.rain != null)
-                        rain.setText(currentData.rain.lluvia1hora + "");
+                    if (currentData!=null)
+                        rellenarDatos();
                     else
-                        rain.setText("0%");
-                    ImageDownloader.downloadImage(currentData.weather.get(0).icon, image);
+                        Toast.makeText(SelectCity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -184,33 +176,39 @@ public class SelectCity extends BaseActivity implements OnPrediccionListener {
             public void doInBackground() {
                 currentData = Connector.getConector().get(CurrentData.class,
                         Parameters.CURRENT_1 + "&lat=" + ciudadGuardada.lat +
-                                "&lon=" + ciudadGuardada.lon + Parameters.CURRENT_2);
+                                "&lon=" + ciudadGuardada.lon);
             }
-
             @Override
             public void doInUI() {
-                titulo.setText(currentData.name);
-                pais.setText(currentData.sys.country);
-                temp.setText(currentData.main.temp + "º");
-                if (currentData.main.temp > 26)
-                    temp.setTextColor(getColor(R.color.RED));
-                desc.setText(currentData.weather.get(0).description);
-                wind.setText(currentData.wind.speed + "km/h");
-                humidity.setText(currentData.main.humidity + "%");
-                if (currentData.rain != null)
-                    rain.setText(currentData.rain.lluvia1hora + "");
-                else
-                    rain.setText("0%");
-                ImageDownloader.downloadImage(currentData.weather.get(0).icon, image);
+                if (currentData!=null) {
+                    rellenarDatos();
+                }else
+                    Toast.makeText(SelectCity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
             }
         });
         hideProgress();
     }
 
+    private void rellenarDatos() {
+        titulo.setText(currentData.name);
+        estado.setText(ciudadGuardada.state);
+        pais.setText(currentData.sys.country);
+        temp.setText(currentData.main.temp + "º");
+        if (currentData.main.temp > 26)
+            temp.setTextColor(getColor(R.color.RED));
+        desc.setText(Tools.primeraMayu(currentData.weather.get(0).description));
+        wind.setText(currentData.wind.speed + "km/h");
+        humidity.setText(currentData.main.humidity + "%");
+        if (currentData.rain != null)
+            rain.setText(currentData.rain.lluvia1hora + "");
+        else
+            rain.setText("0%");
+        ImageDownloader.downloadImage(currentData.weather.get(0).icon, image);
+    }
+
     @Override
-    public void onPrediccionClick(int position) {
+    public void onItemClick(int position) {
         mostrarCiudadGuardada(position);
         buscar.getEditText().setText(ciudadGuardada.name + ", " + ((ciudadGuardada.state != null) ? ciudadGuardada.state + ", " : "") + ciudadGuardada.country);
     }
-
 }

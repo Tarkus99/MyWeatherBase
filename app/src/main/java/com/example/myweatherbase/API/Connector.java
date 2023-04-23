@@ -1,8 +1,6 @@
 package com.example.myweatherbase.API;
 
 
-import android.util.Log;
-
 import com.example.myweatherbase.base.Parameters;
 
 import java.util.List;
@@ -41,17 +39,16 @@ public class Connector{
     public <T> T get(Class<T> clazz, String path){
         String jsonResponse = callMethodsObject.get(path);
         String aux;
-        if (jsonResponse.charAt(0)=='['){
-            aux = jsonResponse.substring(1, jsonResponse.length()-1);
-        }else{
-            aux = jsonResponse;
-        }
-        if(jsonResponse != null) {
-            Log.d("url", path);
-            Log.d("json", jsonResponse);
+        if (jsonResponse!=null) {
+            if (jsonResponse.charAt(0) == '[') {
+                aux = jsonResponse.substring(1, jsonResponse.length() - 1);
+            } else {
+                aux = jsonResponse;
+            }
             return conversor.fromJson(aux, clazz);
+        }else{
+            return null;
         }
-        return null;
     }
 
     public <T> T post(Class<T> clazz, T data, String path){
