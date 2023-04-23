@@ -18,9 +18,12 @@ public class ImageDownloader {
     private final static String TAG = ImageDownloader.class.getName();
 
     public static void downloadImage(String url, ImageView imageView){
-        Picasso.get().load(url).into(imageView);
+        Picasso.get().load(Parameters.ICON_URL_PRE + url + Parameters.ICON_URL_POST).into(imageView);
     }
 
+    public static void downloadImageCiudad(String url, ImageView imageView){
+        Picasso.get().load(url).into(imageView);
+    }
     public static void downloadImage(Context context, String url, ImageView imageView, int defaultDrawable){
         ImageRequest peticion = new ImageRequest(
                 url,

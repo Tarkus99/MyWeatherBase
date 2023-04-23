@@ -4,6 +4,7 @@ package com.example.myweatherbase.API;
 import com.example.myweatherbase.base.Parameters;
 
 import java.io.IOException;
+
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -11,7 +12,7 @@ import retrofit2.Retrofit;
 
 public class CallMethods<T>  {
 
-    private Retrofit retrofit = new Retrofit.Builder().baseUrl(Parameters.URL).build();
+    private Retrofit retrofit = new Retrofit.Builder().baseUrl(Parameters.BASE_URL).build();
     private APIService service = retrofit.create(APIService.class);
     private static CallMethods callMethods;
 

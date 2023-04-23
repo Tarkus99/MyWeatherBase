@@ -1,4 +1,4 @@
-package com.example.myweatherbase.activities.model;
+package com.example.myweatherbase.activities;
 
 // Class obtained from https://json2csharp.com/code-converters/json-to-pojo
 // and modified by adding Serializable interface
@@ -40,7 +40,7 @@ class Sys implements Serializable{
 }
 
 class Rain implements Serializable{
-    public double _3h;
+    public double lluvia;
 }
 
 class List implements Serializable{
@@ -70,17 +70,15 @@ class City implements Serializable {
     public int timezone;
     public int sunrise;
     public int sunset;
+
 }
 
-public class Root implements Serializable {
+public class Prediccion implements Serializable {
     public String cod;
     public int message;
     public int cnt;
     public ArrayList<List> list;
     public City city;
 
-    public String getCity(){
-        return city.name;
-    }
 }
 

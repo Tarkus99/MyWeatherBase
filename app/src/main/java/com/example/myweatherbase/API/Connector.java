@@ -1,12 +1,17 @@
 package com.example.myweatherbase.API;
 
 
+import android.util.Log;
+
 import com.example.myweatherbase.base.Parameters;
 
 import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+
+//import okhttp3.MediaType;
+//import okhttp3.RequestBody;
 
 
 public class Connector{
@@ -34,10 +39,18 @@ public class Connector{
 
 
     public <T> T get(Class<T> clazz, String path){
-        String url = Parameters.URL + Parameters.URL_OPTIONS + path;
-        String jsonResponse = callMethodsObject.get(url);
-        if(jsonResponse != null)
-            return conversor.fromJson(jsonResponse, clazz);
+        String jsonResponse = callMethodsObject.get(path);
+        String aux;
+        if (jsonResponse.charAt(0)=='['){
+            aux = jsonResponse.substring(1, jsonResponse.length()-1);
+        }else{
+            aux = jsonResponse;
+        }
+        if(jsonResponse != null) {
+            Log.d("url", path);
+            Log.d("json", jsonResponse);
+            return conversor.fromJson(aux, clazz);
+        }
         return null;
     }
 

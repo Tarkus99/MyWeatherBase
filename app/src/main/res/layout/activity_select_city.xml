@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/custom_background"
+    android:scaleType="fitXY"
+    app:layout_anchorGravity="center"
+    tools:context=".activities.SelectCity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.50121653"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/initTitulo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/roboto_lightitalic"
+        android:inputType="textMultiLine"
+        android:text="Ciudad"
+        android:textColor="#FFFFFF"
+        android:textDirection="rtl"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/initPais"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#FFFFEB3B"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
+
+    <ImageView
+        android:id="@+id/initImage"
+        android:layout_width="91dp"
+        android:layout_height="85dp"
+        app:layout_constraintBottom_toBottomOf="@+id/initTitulo"
+        app:layout_constraintStart_toEndOf="@+id/initTitulo"
+        app:layout_constraintTop_toTopOf="@+id/initTitulo"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/initTempValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_light"
+        android:text="TextView"
+        android:textColor="#FFF303"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/initPais" />
+
+    <TextView
+        android:id="@+id/initDescValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/roboto_light"
+        android:text="TextView"
+        android:textColor="#FFF303"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/initTempValue" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="6"
+        app:guidelineUseRtl="false"
+        app:layout_constraintBottom_toTopOf="@+id/initTitulo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFEFE"
+            app:srcCompat="@drawable/ic_rain_material" />
+
+        <TextView
+            android:id="@+id/initRain"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_bold"
+            android:text="TextView"
+            android:textColor="#FFEB3B"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_humidity_material" />
+
+        <TextView
+            android:id="@+id/initHumidity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_bold"
+            android:text="TextView"
+            android:textColor="#FFEB3B"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_wind_material" />
+
+        <TextView
+            android:id="@+id/initWind"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/roboto_bold"
+            android:text="TextView"
+            android:textColor="#FFEB3B"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:tag="b"
+        app:layout_constraintBottom_toBottomOf="@+id/buscador"
+        app:layout_constraintStart_toEndOf="@+id/buscador"
+        app:layout_constraintTop_toTopOf="@+id/buscador"
+        app:srcCompat="@drawable/ic_search" />
+
+    <ImageButton
+        android:id="@+id/update"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/initTitulo"
+        app:layout_constraintStart_toEndOf="@+id/initImage"
+        app:layout_constraintTop_toTopOf="@+id/initTitulo"
+        app:layout_constraintVertical_bias="0.625"
+        app:srcCompat="@drawable/ic_update" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/buscador"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#DA2626"
+        android:backgroundTintMode="src_in"
+        android:textColorHint="#FFFFFF"
+        app:boxBackgroundColor="#009688"
+        app:boxBackgroundMode="filled"
+        app:boxStrokeColor="#009688"
+        app:endIconMode="clear_text"
+        app:helperText="Ciudad,País,Estado"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="#FFFFFF"
+        app:hintTextColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/initDescValue">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:gravity="top|start"
+            android:hint="Buscar"
+            android:inputType="textMultiLine"
+            android:textColor="#FBFBFB"
+            android:textColorHint="#F8F7F7"
+            android:textSize="24dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/ubi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#00EFEFEF"
+        android:contentDescription="Ubicación actual"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buscador"
+        app:srcCompat="@drawable/ic_ubi" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="320dp"
+        android:layout_height="126dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_scroll"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myFavorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_light"
+        android:text="Lugares guardados:"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ubi" />
+
+    <ImageButton
+        android:id="@+id/addCiudad"
+        android:layout_width="70dp"
+        android:layout_height="127dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2"
+        app:srcCompat="@drawable/ic_add" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
