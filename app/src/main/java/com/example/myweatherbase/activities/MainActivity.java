@@ -29,11 +29,19 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
     private ImageView image;
     private ImageButton update, addFavorite;
     private String latitudRecibida, longitudRecibida;
-    private ImageButton volverPaginaInicio;
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
+        finish();
+        super.onBackPressed();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_2);
+        setContentView(R.layout.activity_main);
 
         titulo = findViewById(R.id.initTitulo);
         estado = findViewById(R.id.initEstado);
@@ -46,7 +54,6 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
         image=findViewById(R.id.initImage);
         update=findViewById(R.id.update);
         addFavorite=findViewById(R.id.addFavorite);
-        volverPaginaInicio =findViewById(R.id.imageButton2);
         recyclerView = findViewById(R.id.myRecyclerView2);
 
         prediccionAdapter = new PrediccionAdapter(this, this);
@@ -101,11 +108,6 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
         addFavorite.setOnClickListener(view -> {
             CityRepository.getInstance().addCity(ciudadGuardada);
             Toast.makeText(this, ciudadGuardada.name + " se ha añadido a lugares guardados.", Toast.LENGTH_SHORT).show();
-        });
-        volverPaginaInicio.setOnClickListener(view -> {
-            Intent i = new Intent();
-            setResult(RESULT_OK, i);
-            finish();
         });
     }
 

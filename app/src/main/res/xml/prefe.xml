@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Un titulo">
+
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:inputType="number"
+            android:key="editTextPreferenceKey"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Edit text preference"
+            app:summary="Resumen de la preferencia" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="checkBoxPreferenceKey"
+            android:title="Check box preference"
+            app:summary="Ejemplo de checkbox" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/unidades_entries"
+            android:entryValues="@array/unidades_values"
+            android:key="metricPreference"
+            android:title="List preference" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/temas_entries"
+            android:entryValues="@array/temas_values"
+            android:key="themePreference"
+            android:title="Theme" />
+    </PreferenceCategory>
+</PreferenceScreen>

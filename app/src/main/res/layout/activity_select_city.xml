@@ -15,13 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_percent="0.50121653"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/initTitulo"
@@ -86,6 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/initTempValue" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="32dp"
@@ -176,13 +175,13 @@
 
     <ImageButton
         android:id="@+id/update"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/initTitulo"
-        app:layout_constraintStart_toEndOf="@+id/initImage"
-        app:layout_constraintTop_toTopOf="@+id/initTitulo"
-        app:layout_constraintVertical_bias="0.625"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FF2222"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_update" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -269,14 +268,25 @@
         app:layout_constraintStart_toEndOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="@+id/scrollView2"
         app:srcCompat="@drawable/ic_add" />
+
     <TextView
         android:id="@+id/initEstado"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:autoSizeTextType="uniform"
         android:text="TextView"
         android:textColor="#FFFFEB3B"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/initPais"
         app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_settings" />
 </androidx.constraintlayout.widget.ConstraintLayout>

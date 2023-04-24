@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">MyWeatherBase</string>
     <string name="no_network">Sin conexión a Internet.</string>
+
+    <string name="standard">estandar</string>
+    <string name="metric">metri</string>
+    <string name="imperial">imperial</string>
+
+    <string name="tema_automatico">Automático</string>
+    <string name="tema_claro">Claro</string>
+    <string name="tema_oscuro">Oscuro</string>
 </resources>

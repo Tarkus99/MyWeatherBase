@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".PreferencesActivities"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MainActivityPrueba"
+            android:exported="false" />
+        <activity
             android:name=".activities.DetailedView"
             android:exported="false" />
         <activity

@@ -32,7 +32,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
     private String proveedor;
     private TextView titulo, temp, desc, pais, wind, humidity, rain, estado;
     private TextInputLayout buscar;
-    private ImageButton btnBuscar, update, actualUbi, addCiudad;
+    private ImageButton btnBuscar, update, actualUbi, addCiudad, settings;
     private CurrentData currentData;
     private CiudadGuardada ciudadGuardada, ciudadAux;
     private RecyclerView lugaresGuardadosRecycler;
@@ -55,6 +55,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         buscar = findViewById(R.id.buscador);
         btnBuscar = findViewById(R.id.btnBuscar);
         update = findViewById(R.id.update);
+        settings = findViewById(R.id.settings);
         actualUbi = findViewById(R.id.ubi);
         addCiudad = findViewById(R.id.addCiudad);
         lugaresGuardadosRecycler = findViewById(R.id.myFavorites);
