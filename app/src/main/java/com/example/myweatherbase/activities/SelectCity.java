@@ -34,8 +34,9 @@ public class SelectCity extends BaseActivity implements OnItemListener {
     private TextInputLayout buscar;
     private ImageButton btnBuscar, update, actualUbi, addCiudad;
     private CurrentData currentData;
-    private CiudadGuardada ciudadGuardada;
+    private CiudadGuardada ciudadGuardada, ciudadAux;
     private RecyclerView lugaresGuardadosRecycler;
+    private ActivityResultLauncher<Intent> someActivityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         lugaresGuardadosRecycler.setLayoutManager(linearLayoutManager);
 
-        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+        someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) lugaresGuardadosAdapter.notifyDataSetChanged();
@@ -156,9 +157,10 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void doInUI() {
-                    if (currentData!=null)
+                    if (currentData!=null) {
                         rellenarDatos();
-                    else
+                        Toast.makeText(SelectCity.this, ciudadGuardada.name, Toast.LENGTH_LONG).show();
+                    } else
                         Toast.makeText(SelectCity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -190,7 +192,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
     }
 
     private void rellenarDatos() {
-        titulo.setText(currentData.name);
+        titulo.setText(ciudadGuardada.name);
         estado.setText(ciudadGuardada.state);
         pais.setText(currentData.sys.country);
         temp.setText(currentData.main.temp + "º");
@@ -208,7 +210,9 @@ public class SelectCity extends BaseActivity implements OnItemListener {
 
     @Override
     public void onItemClick(int position) {
-        mostrarCiudadGuardada(position);
-        buscar.getEditText().setText(ciudadGuardada.name + ", " + ((ciudadGuardada.state != null) ? ciudadGuardada.state + ", " : "") + ciudadGuardada.country);
+        ciudadAux = CityRepository.getInstance().getCiudad(position);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        i.putExtra("ciudadGuardada", ciudadAux);
+        someActivityResultLauncher.launch(i);
     }
 }
