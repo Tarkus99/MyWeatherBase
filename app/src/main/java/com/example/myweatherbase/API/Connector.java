@@ -1,6 +1,8 @@
 package com.example.myweatherbase.API;
 
 
+import android.util.Log;
+
 import com.example.myweatherbase.base.Parameters;
 
 import java.util.List;
@@ -27,16 +29,17 @@ public class Connector{
         return connector;
     }
 
-    public <T> List<T> getAsList(Class<T> clazz, String path){
-        String url = Parameters.URL + Parameters.URL_OPTIONS + path;
-        String jsonResponse = callMethodsObject.get(url);
-        if(jsonResponse != null)
-            return conversor.fromJsonList(jsonResponse, clazz);
-        return null;
-    }
+//    public <T> List<T> getAsList(Class<T> clazz, String path){
+//        String url = Parameters.PREDICCION + Parameters.URL_OPTIONS + path;
+//        String jsonResponse = callMethodsObject.get(url);
+//        if(jsonResponse != null)
+//            return conversor.fromJsonList(jsonResponse, clazz);
+//        return null;
+//    }
 
 
     public <T> T get(Class<T> clazz, String path){
+        Log.d("url", path);
         String jsonResponse = callMethodsObject.get(path);
         String aux;
         if (jsonResponse!=null) {
@@ -51,33 +54,33 @@ public class Connector{
         }
     }
 
-    public <T> T post(Class<T> clazz, T data, String path){
-        String url = Parameters.URL + Parameters.URL_OPTIONS + path;
-        String jsonObject = conversor.toJson(data);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
-        String jsonResponse = callMethodsObject.post(url, body);
-        if(jsonResponse != null)
-            return conversor.fromJson(jsonResponse, clazz);
-        return null;
-    }
-
-    public <T> T put(Class<T> clazz, T data, String path){
-        String url = Parameters.URL + Parameters.URL_OPTIONS + path;
-        String jsonObject = conversor.toJson(data);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
-        String jsonResponse = callMethodsObject.put(url, body);
-        if(jsonResponse != null)
-            return conversor.fromJson(jsonResponse, clazz);
-        return null;
-    }
-
-    public <T> T delete(Class<T> clazz, String path){
-        String url = Parameters.URL + Parameters.URL_OPTIONS + path;
-        String jsonResponse = callMethodsObject.delete(url);
-        if(jsonResponse != null)
-            return conversor.fromJson(jsonResponse, clazz);
-        return null;
-    }
+//    public <T> T post(Class<T> clazz, T data, String path){
+//        String url = Parameters.PREDICCION + Parameters.URL_OPTIONS + path;
+//        String jsonObject = conversor.toJson(data);
+//        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
+//        String jsonResponse = callMethodsObject.post(url, body);
+//        if(jsonResponse != null)
+//            return conversor.fromJson(jsonResponse, clazz);
+//        return null;
+//    }
+//
+//    public <T> T put(Class<T> clazz, T data, String path){
+//        String url = Parameters.PREDICCION + Parameters.URL_OPTIONS + path;
+//        String jsonObject = conversor.toJson(data);
+//        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
+//        String jsonResponse = callMethodsObject.put(url, body);
+//        if(jsonResponse != null)
+//            return conversor.fromJson(jsonResponse, clazz);
+//        return null;
+//    }
+//
+//    public <T> T delete(Class<T> clazz, String path){
+//        String url = Parameters.PREDICCION + Parameters.URL_OPTIONS + path;
+//        String jsonResponse = callMethodsObject.delete(url);
+//        if(jsonResponse != null)
+//            return conversor.fromJson(jsonResponse, clazz);
+//        return null;
+//    }
 
 }
 

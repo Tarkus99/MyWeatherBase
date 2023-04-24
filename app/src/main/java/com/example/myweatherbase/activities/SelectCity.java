@@ -55,7 +55,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         buscar = findViewById(R.id.buscador);
         btnBuscar = findViewById(R.id.btnBuscar);
         update = findViewById(R.id.update);
-        settings = findViewById(R.id.settings);
+        settings = findViewById(R.id.settingsMain);
         actualUbi = findViewById(R.id.ubi);
         addCiudad = findViewById(R.id.addCiudad);
         lugaresGuardadosRecycler = findViewById(R.id.myFavorites);
@@ -75,7 +75,12 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         initialize();
 
         update.setOnClickListener(view -> {
+            temp.setTextColor(getResources().getColor(R.color.miamarillo));
             initialize();
+        });
+        settings.setOnClickListener(vie->{
+            Intent intent = new Intent(this, PreferencesActivities.class);
+            startActivity(intent);
         });
 
         buscar.getEditText().addTextChangedListener(new MyTextWatcher(buscar));
@@ -88,8 +93,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                     executeCall(new CallInterface() {
                         @Override
                         public void doInBackground() {
-                            ciudadGuardada = Connector.getConector().get(CiudadGuardada.class,
-                                    Parameters.BY_CITY_1 + buscar.getEditText().getText().toString());
+                            llamadaCiudadGuardada();
                         }
                         @Override
                         public void doInUI() {
@@ -147,12 +151,8 @@ public class SelectCity extends BaseActivity implements OnItemListener {
             executeCall(new CallInterface() {
                 @Override
                 public void doInBackground() {
-                    ciudadGuardada =  Connector.getConector().get(CiudadGuardada.class,
-                            Parameters.BY_CITY_1_REVERSE + location.getLatitude() +
-                                    "&lon=" + location.getLongitude());
-                    currentData = Connector.getConector().get(CurrentData.class,
-                            Parameters.CURRENT_1 + "&lat=" + location.getLatitude() +
-                                    "&lon=" + location.getLongitude());
+                    llamadaCiudadReverse(location);
+                    llamadaCurrentInit(location);
                 }
 
                 @SuppressLint("SetTextI18n")
@@ -160,13 +160,13 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                 public void doInUI() {
                     if (currentData!=null) {
                         rellenarDatos();
-                        Toast.makeText(SelectCity.this, ciudadGuardada.name, Toast.LENGTH_LONG).show();
                     } else
                         Toast.makeText(SelectCity.this, R.string.no_network, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
             mostrarCiudadGuardada(0);
+            Toast.makeText(SelectCity.this, R.string.no_ubi, Toast.LENGTH_SHORT).show();
         }
         hideProgress();
     }
@@ -177,9 +177,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         executeCall(new CallInterface() {
             @Override
             public void doInBackground() {
-                currentData = Connector.getConector().get(CurrentData.class,
-                        Parameters.CURRENT_1 + "&lat=" + ciudadGuardada.lat +
-                                "&lon=" + ciudadGuardada.lon);
+                llamadaCurrentDataNoUbi();
             }
             @Override
             public void doInUI() {
@@ -196,7 +194,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         titulo.setText(ciudadGuardada.name);
         estado.setText(ciudadGuardada.state);
         pais.setText(currentData.sys.country);
-        temp.setText(currentData.main.temp + "º");
+        temp.setText(String.valueOf(currentData.main.temp));
         if (currentData.main.temp > 26)
             temp.setTextColor(getColor(R.color.RED));
         desc.setText(Tools.primeraMayu(currentData.weather.get(0).description));
@@ -215,5 +213,41 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         i.putExtra("ciudadGuardada", ciudadAux);
         someActivityResultLauncher.launch(i);
+    }
+    private void llamadaCurrentDataNoUbi() {
+        currentData = Connector.getConector().get(CurrentData.class,
+                Parameters.CURRENT_1 +
+                        "lat=" + ciudadGuardada.lat +
+                        "&lon=" + ciudadGuardada.lon +
+                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
+                        "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
+    }
+    private void llamadaCurrentInit(Location location) {
+        currentData = Connector.getConector().get(CurrentData.class,
+                Parameters.CURRENT_1 +
+                        "lat=" + location.getLatitude() +
+                        "&lon=" + location.getLongitude() +
+                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
+                        "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
+    }
+
+    private void llamadaCiudadReverse(Location location) {
+        ciudadGuardada =  Connector.getConector().get(CiudadGuardada.class,
+                Parameters.BY_CITY_1_REVERSE +
+                        "lat=" + location.getLatitude() +
+                        "&lon=" + location.getLongitude() +
+                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
+                        "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
+    }
+    private void llamadaCiudadGuardada() {
+        ciudadGuardada = Connector.getConector().get(CiudadGuardada.class,
+                Parameters.BY_CITY_1 +
+                        "q=" +buscar.getEditText().getText().toString()+
+                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
+                        "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
 }

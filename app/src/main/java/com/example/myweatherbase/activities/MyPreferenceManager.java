@@ -22,14 +22,14 @@ public class MyPreferenceManager {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public String getEditText(){
-        return preferences.getString("editTextPreferenceKey", "default view");
+    public String getApi() {
+        return preferences.getString("API", "default view");
     }
-    public boolean getCheckBox(){
-        return preferences.getBoolean("checkBoxPreferenceKey", false);
+    public String getUnits(){
+        return preferences.getString("listUnits", "standard");
     }
-    public String getListPreference(){
-        return preferences.getString("listPreference", "standard");
+    public String getLang(){
+        return preferences.getString("listLang", "en");
     }
 
 }

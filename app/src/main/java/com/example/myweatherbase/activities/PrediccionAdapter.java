@@ -90,9 +90,6 @@ public class PrediccionAdapter extends RecyclerView.Adapter<PrediccionAdapter.Vi
         public void setPos(int pos) {
             this.pos = pos;
         }
-        public int getPos() {
-            return pos;
-        }
 
         public String quitarPuntosGrados(String str) {
             String aux;

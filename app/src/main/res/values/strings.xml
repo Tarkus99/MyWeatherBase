@@ -1,12 +1,20 @@
 <resources>
     <string name="app_name">MyWeatherBase</string>
     <string name="no_network">Sin conexión a Internet.</string>
+    <string name="no_ubi">Sin acceso a la ubicación. Mostrando" +
+                    "la primera ciudad.</string>
 
     <string name="standard">estandar</string>
-    <string name="metric">metri</string>
+    <string name="metric">metric</string>
     <string name="imperial">imperial</string>
 
     <string name="tema_automatico">Automático</string>
     <string name="tema_claro">Claro</string>
     <string name="tema_oscuro">Oscuro</string>
+
+    <string name="ingles">English</string>
+    <string name="español">Spanish</string>
+    <string name="frances">Français</string>
+    <string name="italiano">Italiano</string>
+    <string name="chino">Chinese</string>
 </resources>

@@ -30,13 +30,6 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
     private ImageButton update, addFavorite;
     private String latitudRecibida, longitudRecibida;
 
-    @Override
-    public void onBackPressed() {
-        Intent i = new Intent();
-        setResult(RESULT_OK, i);
-        finish();
-        super.onBackPressed();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +81,8 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
             executeCall(new CallInterface() {
                 @Override
                 public void doInBackground() {
-                    currentData = Connector.getConector().get(CurrentData.class,
-                            Parameters.CURRENT_1 + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
-                    prediccion = Connector.getConector().get(Prediccion.class,
-                            Parameters.URL + Parameters.URL_OPTIONS + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
+                    llamadaCurrentData();
+                    llamadaPrediccion();
                 }
                 @Override
                 public void doInUI() {
@@ -109,6 +100,14 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
             CityRepository.getInstance().addCity(ciudadGuardada);
             Toast.makeText(this, ciudadGuardada.name + " se ha añadido a lugares guardados.", Toast.LENGTH_SHORT).show();
         });
+
+    }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
+        finish();
+        super.onBackPressed();
     }
 
     @Override
@@ -121,12 +120,9 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
     @Override
     public void doInBackground() {
         if (!reciboCiudad)
-            ciudadGuardada = Connector.getConector().get(CiudadGuardada.class,
-                    Parameters.BY_CITY_1_REVERSE + latitudRecibida + "&lon="+longitudRecibida);
-        currentData = Connector.getConector().get(CurrentData.class,
-                    Parameters.CURRENT_1 + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
-        prediccion = Connector.getConector().get(Prediccion.class,
-                Parameters.URL + Parameters.URL_OPTIONS + "&lat=" + latitudRecibida + "&lon=" + longitudRecibida);
+            llamadaCiudadGuardada();
+        llamadaCurrentData();
+        llamadaPrediccion();
     }
 
     @Override
@@ -144,7 +140,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
         titulo.setText(ciudadGuardada.name);
         estado.setText(ciudadGuardada.state+", ");
         pais.setText(ciudadGuardada.country);
-        temperatura.setText(currentData.main.temp + "º");
+        temperatura.setText(String.valueOf(currentData.main.temp));
         if (currentData.main.temp > 26)
             temperatura.setTextColor(getColor(R.color.RED));
         desc.setText(Tools.primeraMayu(currentData.weather.get(0).description));
@@ -161,4 +157,34 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
     public void onItemClick(int position) {
         Toast.makeText(this, position+"", Toast.LENGTH_SHORT).show();
     }
+    private void llamadaCiudadGuardada() {
+        ciudadGuardada = Connector.getConector().get(CiudadGuardada.class,
+                Parameters.BY_CITY_1_REVERSE +
+                        "lat=" +latitudRecibida +
+                        "&lon="+longitudRecibida +
+                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
+                        "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
+    }
+
+    private void llamadaPrediccion() {
+        prediccion = Connector.getConector().get(Prediccion.class,
+                Parameters.PREDICCION +
+                        "lat=" + latitudRecibida +
+                        "&lon=" + longitudRecibida +
+                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
+                        "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
+    }
+
+    private void llamadaCurrentData() {
+        currentData = Connector.getConector().get(CurrentData.class,
+                Parameters.CURRENT_1 +
+                        "lat=" + latitudRecibida +
+                        "&lon=" + longitudRecibida +
+                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
+                        "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
+    }
+
 }

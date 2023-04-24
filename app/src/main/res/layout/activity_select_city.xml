@@ -41,10 +41,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textColor="#FFFFEB3B"
+        android:textColor="#CAB714"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
+        app:layout_constraintTop_toBottomOf="@+id/initEstado" />
 
     <ImageView
         android:id="@+id/initImage"
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/roboto_light"
+        android:fontFamily="@font/roboto_medium"
         android:text="TextView"
         android:textColor="#FFF303"
         android:textSize="24sp"
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/roboto_light"
+        android:fontFamily="@font/roboto_medium"
         android:text="TextView"
         android:textColor="#FFF303"
         android:textSize="24sp"
@@ -271,22 +271,33 @@
 
     <TextView
         android:id="@+id/initEstado"
-        android:layout_width="100dp"
+        android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:autoSizeTextType="uniform"
         android:text="TextView"
-        android:textColor="#FFFFEB3B"
+        android:textColor="#D1BD0A"
+        android:textDirection="rtl"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/initPais"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/settingsMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#00FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_settings" />
+
+    <ImageView
+        android:id="@+id/unitsImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="-12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/initTempValue"
+        app:layout_constraintStart_toEndOf="@+id/initTempValue"
+        app:layout_constraintTop_toTopOf="@+id/initTempValue"
+        app:srcCompat="@mipmap/ic_celsius_foreground"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

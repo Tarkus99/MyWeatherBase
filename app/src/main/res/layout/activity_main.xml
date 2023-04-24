@@ -56,7 +56,7 @@
         android:textColor="#FFFFEB3B"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
+        app:layout_constraintTop_toBottomOf="@+id/initEstado" />
 
     <ImageView
         android:id="@+id/initImage"
@@ -72,7 +72,7 @@
         android:id="@+id/initTempValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/roboto_medium"
         android:text="TextView"
         android:textColor="#FFF303"
@@ -216,13 +216,14 @@
 
     <TextView
         android:id="@+id/initEstado"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:autoSizeTextType="uniform"
         android:text="TextView"
         android:textColor="#FFFFEB3B"
+        android:textDirection="rtl"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/initPais"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

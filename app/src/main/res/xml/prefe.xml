@@ -2,16 +2,16 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Un titulo">
+    <PreferenceCategory android:title="Ajustes Generales">
 
         <EditTextPreference
-            android:defaultValue="Default value"
+            android:defaultValue="cc7ea74c6101f3d5ba6ee2b6e186b5be"
             android:inputType="number"
-            android:key="editTextPreferenceKey"
+            android:key="API"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Edit text preference"
-            app:summary="Resumen de la preferencia" />
+            android:title="API"
+            app:summary="API para realizar las llamadas" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="checkBoxPreferenceKey"
@@ -21,13 +21,19 @@
             android:defaultValue="1"
             android:entries="@array/unidades_entries"
             android:entryValues="@array/unidades_values"
-            android:key="metricPreference"
-            android:title="List preference" />
+            android:key="listUnits"
+            android:title="Unidades" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/lang_entries"
+            android:entryValues="@array/lang_values"
+            android:key="listLang"
+            android:title="Idiomas/Languages" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/temas_entries"
             android:entryValues="@array/temas_values"
             android:key="themePreference"
-            android:title="Theme" />
+            android:title="Temas" />
     </PreferenceCategory>
 </PreferenceScreen>
