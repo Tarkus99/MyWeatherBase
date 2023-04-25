@@ -1,13 +1,21 @@
 package com.example.myweatherbase.activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,7 +78,8 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_OK) lugaresGuardadosAdapter.notifyDataSetChanged();
+                    if (result.getResultCode() == RESULT_OK)
+                        lugaresGuardadosAdapter.notifyDataSetChanged();
                 });
 
         initialize();
@@ -78,7 +88,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
             temp.setTextColor(getResources().getColor(R.color.miamarillo));
             initialize();
         });
-        settings.setOnClickListener(vie->{
+        settings.setOnClickListener(vie -> {
             Intent intent = new Intent(this, PreferencesActivities.class);
             startActivity(intent);
         });
@@ -95,6 +105,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                         public void doInBackground() {
                             llamadaCiudadGuardada();
                         }
+
                         @Override
                         public void doInUI() {
                             if (ciudadGuardada != null) {
@@ -105,7 +116,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                             } else {
                                 hideProgress();
                                 buscar.setErrorEnabled(true);
-                                buscar.setError("La ciudad/población introducida no ha ofrecido resultados./"+R.string.no_network);
+                                buscar.setError("La ciudad/población introducida no ha ofrecido resultados./" + R.string.no_network);
                             }
                         }
                     });
@@ -114,9 +125,80 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         });
 
         addCiudad.setOnClickListener(view -> {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = getLayoutInflater();
+            View v = inflater.inflate(R.layout.dialogo_personalizado, null);
+            dialogBuilder.setView(v);
+            ////
+            TextView txLat = v.findViewById(R.id.diaLat);
+            TextView txLon = v.findViewById(R.id.diaLon);
+            ImageButton diaDelete = v.findViewById(R.id.diaDelete);
+            ImageButton diaBuscar = v.findViewById(R.id.diaBuscar);
+            TextInputLayout diaBuscador = v.findViewById(R.id.diaBuscador);
+            ////
+
+            dialogBuilder.setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            dialogBuilder.setPositiveButton("GUARDAR", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (ciudadAux != null) {
+                        CityRepository.getInstance().addCity(ciudadAux);
+                        lugaresGuardadosAdapter.notifyDataSetChanged();
+                        Toast.makeText(SelectCity.this, "Ciudad guardada.", Toast.LENGTH_LONG).show();
+                        dialogInterface.cancel();
+                    }
+                }
+            });
+            AlertDialog dialog = dialogBuilder.create();
+            dialog.show();
+
+            diaDelete.setOnClickListener(view1 -> {
+                diaBuscador.getEditText().setText("");
+                diaBuscador.setEnabled(true);
+                txLat.setText("Latitud:");
+                txLon.setText("Longitud:");
+                ciudadAux=null;
+            });
+            diaBuscar.setOnClickListener(view1 -> {
+                if (!diaBuscador.getEditText().getText().toString().matches("")) {
+                    executeCall(new CallInterface() {
+                        @Override
+                        public void doInBackground() {
+                            ciudadAux = Connector.getConector().get(CiudadGuardada.class,
+                                    Parameters.BY_CITY_1 +
+                                            "q=" + diaBuscador.getEditText().getText().toString() +
+                                            "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                                            "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
+                        }
+
+                        @Override
+                        public void doInUI() {
+                            if (ciudadAux != null) {
+                                diaBuscador.getEditText().setText(ciudadAux.name +
+                                        ", " + ciudadAux.state +
+                                        ", " + ciudadAux.country);
+                                txLat.setText("Latitud: " + ciudadAux.lat);
+                                txLon.setText("Longitud: " + ciudadAux.lon);
+                                diaBuscador.setErrorEnabled(false);
+                                diaBuscador.setEnabled(false);
+                            }else{
+                                diaBuscador.setErrorEnabled(true);
+                                diaBuscador.setError("Sin resultados.");
+                            }
+                        }
+                    });
+                }
+            });
+
         });
 
-        actualUbi.setOnClickListener(view -> {
+
+        actualUbi.setOnClickListener(vi -> {
             managerloc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
             criteria.setCostAllowed(false);
@@ -134,8 +216,8 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                 Toast.makeText(this, "No se ha podido acceder a la ubicación.", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
 
     private void initialize() {
         managerloc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

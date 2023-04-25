@@ -230,20 +230,31 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="320dp"
+        android:layout_width="400dp"
         android:layout_height="126dp"
-        android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/custom_scroll"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myFavorites"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content" />
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/addCiudad"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2"
+        app:srcCompat="@drawable/ic_add" />
 
     <TextView
         android:id="@+id/textView3"
@@ -257,17 +268,6 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ubi" />
-
-    <ImageButton
-        android:id="@+id/addCiudad"
-        android:layout_width="70dp"
-        android:layout_height="127dp"
-        android:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/scrollView2"
-        app:layout_constraintTop_toTopOf="@+id/scrollView2"
-        app:srcCompat="@drawable/ic_add" />
 
     <TextView
         android:id="@+id/initEstado"

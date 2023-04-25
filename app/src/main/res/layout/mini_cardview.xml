@@ -6,6 +6,7 @@
     android:backgroundTint="#02FFFFFF"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
+    app:cardMaxElevation="0dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -23,32 +24,32 @@
                 android:id="@+id/miniCardCiudad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Valencia"
-                android:textSize="24dp"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginStart="0dp"
+                android:fontFamily="@font/roboto_light"
+                android:text="Valencia"
                 android:textColor="#303F9F"
-                android:fontFamily="@font/roboto_light"/>
+                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/miniCardEstado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Comunidad Valenciana"
-                android:textSize="16dp"
                 android:layout_below="@+id/miniCardCiudad"
-                android:layout_alignStart="@id/miniCardCiudad"/>
+                android:layout_alignStart="@id/miniCardCiudad"
+                android:text="Comunidad Valenciana"
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/miniCardPais"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="España"
-                android:textSize="16dp"
                 android:layout_below="@id/miniCardEstado"
                 android:layout_alignStart="@id/miniCardCiudad"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp"
+                android:text="España"
+                android:textSize="16dp" />
 
         </RelativeLayout>
     </LinearLayout>

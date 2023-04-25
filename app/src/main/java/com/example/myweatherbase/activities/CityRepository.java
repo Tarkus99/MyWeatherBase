@@ -10,7 +10,6 @@ public class CityRepository {
     private CityRepository() {
         ciudades = new ArrayList<>();
         ciudades.add(new CiudadGuardada("Valencia", 39.4697500, -0.3773900, "ES", "Valencian Community"));
-        ciudades.add(new CiudadGuardada("El Puig", 39.5930300, -0.3154100, "ES", "Valencian Community"));
         ciudades.add(new CiudadGuardada("Alicante", 38.3451700, -0.4814900, "ES", "Valencian Community"));
     }
 

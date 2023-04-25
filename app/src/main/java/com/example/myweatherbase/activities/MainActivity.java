@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
 
     public void rellenarDatos(){
         titulo.setText(ciudadGuardada.name);
-        estado.setText(ciudadGuardada.state+", ");
+        estado.setText(ciudadGuardada.state);
         pais.setText(ciudadGuardada.country);
         temperatura.setText(String.valueOf(currentData.main.temp));
         if (currentData.main.temp > 26)
