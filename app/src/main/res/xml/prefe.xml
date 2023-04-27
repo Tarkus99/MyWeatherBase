@@ -6,25 +6,18 @@
 
         <EditTextPreference
             android:defaultValue="cc7ea74c6101f3d5ba6ee2b6e186b5be"
-            android:inputType="number"
+            android:inputType="textLongMessage|number"
             android:key="API"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="API"
             app:summary="API para realizar las llamadas" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="checkBoxPreferenceKey"
-            android:title="Check box preference"
-            app:summary="Ejemplo de checkbox" />
         <ListPreference
-            android:defaultValue="1"
             android:entries="@array/unidades_entries"
             android:entryValues="@array/unidades_values"
             android:key="listUnits"
-            android:title="Unidades" />
+            android:title="Unidades"/>
         <ListPreference
-            android:defaultValue="1"
             android:entries="@array/lang_entries"
             android:entryValues="@array/lang_values"
             android:key="listLang"

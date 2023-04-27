@@ -5,17 +5,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +30,9 @@ import com.example.myweatherbase.base.Parameters;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class SelectCity extends BaseActivity implements OnItemListener {
-    private ImageView image;
+    public static SelectCity activity;
+    public static float heatThreshold;
+    private ImageView image, imageUnit1;
     private LocationManager managerloc;
     private String proveedor;
     private TextView titulo, temp, desc, pais, wind, humidity, rain, estado;
@@ -52,10 +48,12 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_city);
 
+        activity = this;
         titulo = findViewById(R.id.initTitulo);
         estado = findViewById(R.id.initEstado);
         pais = findViewById(R.id.initPais);
         image = findViewById(R.id.initImage);
+        imageUnit1 = findViewById(R.id.unitsImage);
         temp = findViewById(R.id.initTempValue);
         desc = findViewById(R.id.initDescValue);
         wind = findViewById(R.id.initWind);
@@ -219,7 +217,8 @@ public class SelectCity extends BaseActivity implements OnItemListener {
     }
 
 
-    private void initialize() {
+    public void initialize() {
+        ImageSetUp.getThreshold();
         managerloc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         criteria.setCostAllowed(false);
@@ -277,7 +276,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         estado.setText(ciudadGuardada.state);
         pais.setText(currentData.sys.country);
         temp.setText(String.valueOf(currentData.main.temp));
-        if (currentData.main.temp > 26)
+        if (currentData.main.temp > heatThreshold)
             temp.setTextColor(getColor(R.color.RED));
         desc.setText(Tools.primeraMayu(currentData.weather.get(0).description));
         wind.setText(currentData.wind.speed + "km/h");
@@ -332,4 +331,5 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
+
 }

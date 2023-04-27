@@ -298,6 +298,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/initTempValue"
         app:layout_constraintStart_toEndOf="@+id/initTempValue"
         app:layout_constraintTop_toTopOf="@+id/initTempValue"
-        app:srcCompat="@mipmap/ic_celsius_foreground"
-        app:tint="@color/white" />
+        app:srcCompat="@mipmap/ic_celsius_foreground" />
 </androidx.constraintlayout.widget.ConstraintLayout>

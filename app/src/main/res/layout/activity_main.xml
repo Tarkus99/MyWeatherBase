@@ -226,4 +226,13 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/initTitulo" />
 
+    <ImageView
+        android:id="@+id/imageUnit2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/initTempValue"
+        app:layout_constraintStart_toEndOf="@+id/initTempValue"
+        app:layout_constraintTop_toTopOf="@+id/initTempValue"
+        app:srcCompat="@mipmap/ic_celsius_foreground" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

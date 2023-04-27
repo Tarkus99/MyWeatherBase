@@ -19,6 +19,8 @@ import com.example.myweatherbase.base.ImageDownloader;
 import com.example.myweatherbase.base.Parameters;
 
 public class MainActivity extends BaseActivity implements CallInterface, OnItemListener {
+
+    public static MainActivity activity;
     private boolean reciboCiudad;
     private PrediccionAdapter prediccionAdapter;
     private RecyclerView recyclerView;
@@ -26,7 +28,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
     private CurrentData currentData;
     private CiudadGuardada ciudadGuardada;
     private TextView titulo, estado, pais, temperatura, desc, rain, humidity, wind;
-    private ImageView image;
+    private ImageView image, imageUnit2;
     private ImageButton update, addFavorite;
     private String latitudRecibida, longitudRecibida;
 
@@ -36,6 +38,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        activity=this;
         titulo = findViewById(R.id.initTitulo);
         estado = findViewById(R.id.initEstado);
         pais=findViewById(R.id.initPais);
@@ -45,6 +48,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
         humidity=findViewById(R.id.initHumidity);
         wind=findViewById(R.id.initWind);
         image=findViewById(R.id.initImage);
+        imageUnit2=SelectCity.activity.findViewById(R.id.unitsImage);
         update=findViewById(R.id.update);
         addFavorite=findViewById(R.id.addFavorite);
         recyclerView = findViewById(R.id.myRecyclerView2);
@@ -141,7 +145,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
         estado.setText(ciudadGuardada.state);
         pais.setText(ciudadGuardada.country);
         temperatura.setText(String.valueOf(currentData.main.temp));
-        if (currentData.main.temp > 26)
+        if (currentData.main.temp > SelectCity.heatThreshold)
             temperatura.setTextColor(getColor(R.color.RED));
         desc.setText(Tools.primeraMayu(currentData.weather.get(0).description));
         wind.setText(currentData.wind.speed + "km/h");
@@ -186,5 +190,4 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
-
 }
