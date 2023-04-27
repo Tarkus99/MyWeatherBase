@@ -170,7 +170,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                             ciudadAux = Connector.getConector().get(CiudadGuardada.class,
                                     Parameters.BY_CITY_1 +
                                             "q=" + diaBuscador.getEditText().getText().toString() +
-                                            "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                                            "&appid=" + Parameters.API +
                                             "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
                         }
 
@@ -300,7 +300,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                 Parameters.CURRENT_1 +
                         "lat=" + ciudadGuardada.lat +
                         "&lon=" + ciudadGuardada.lon +
-                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&appid=" + Parameters.API +
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
@@ -309,7 +309,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                 Parameters.CURRENT_1 +
                         "lat=" + location.getLatitude() +
                         "&lon=" + location.getLongitude() +
-                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&appid=" + Parameters.API +
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
@@ -319,7 +319,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
                 Parameters.BY_CITY_1_REVERSE +
                         "lat=" + location.getLatitude() +
                         "&lon=" + location.getLongitude() +
-                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&appid=" + Parameters.API +
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
@@ -327,7 +327,7 @@ public class SelectCity extends BaseActivity implements OnItemListener {
         ciudadGuardada = Connector.getConector().get(CiudadGuardada.class,
                 Parameters.BY_CITY_1 +
                         "q=" +buscar.getEditText().getText().toString()+
-                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&appid=" + Parameters.API +
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }

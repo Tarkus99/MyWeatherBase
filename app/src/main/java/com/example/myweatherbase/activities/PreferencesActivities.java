@@ -16,4 +16,11 @@ public class PreferencesActivities extends AppCompatActivity {
                 .replace(android.R.id.content, new PreferenciasFragment())
                 .commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SelectCity.activity.initialize();
+        finish();
+    }
 }

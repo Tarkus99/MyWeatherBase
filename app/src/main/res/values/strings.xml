@@ -4,9 +4,9 @@
     <string name="no_ubi">Sin acceso a la ubicación. Mostrando" +
                     "la primera ciudad.</string>
 
-    <string name="standard">estandar</string>
-    <string name="metric">metric</string>
-    <string name="imperial">imperial</string>
+    <string name="standard">Kelvin</string>
+    <string name="metric">Celsius</string>
+    <string name="imperial">Farenheit</string>
 
     <string name="tema_automatico">Automático</string>
     <string name="tema_claro">Claro</string>

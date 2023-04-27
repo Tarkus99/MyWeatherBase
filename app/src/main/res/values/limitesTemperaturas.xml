@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="celsius">26</fraction>
+    <fraction name="farenheit">76.8</fraction>
+    <fraction name="kelvin">299.15</fraction>
+</resources>

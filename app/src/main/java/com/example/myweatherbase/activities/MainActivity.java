@@ -166,7 +166,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
                 Parameters.BY_CITY_1_REVERSE +
                         "lat=" +latitudRecibida +
                         "&lon="+longitudRecibida +
-                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&appid=" + Parameters.API +
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
@@ -176,7 +176,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
                 Parameters.PREDICCION +
                         "lat=" + latitudRecibida +
                         "&lon=" + longitudRecibida +
-                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&appid=" + Parameters.API +
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
@@ -186,7 +186,7 @@ public class MainActivity extends BaseActivity implements CallInterface, OnItemL
                 Parameters.CURRENT_1 +
                         "lat=" + latitudRecibida +
                         "&lon=" + longitudRecibida +
-                        "&appid=" + MyPreferenceManager.getInstance(getApplicationContext()).getApi() +
+                        "&appid=" + Parameters.API +
                         "&units=" + MyPreferenceManager.getInstance(getApplicationContext()).getUnits()+
                         "&lang=" + MyPreferenceManager.getInstance(getApplicationContext()).getLang());
     }
